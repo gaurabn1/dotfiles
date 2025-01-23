@@ -1,0 +1,71 @@
+[window]
+  opacity = 1
+  blur = true
+  decorations = "None"
+  dynamic_padding = true
+  # startup_mode = "Maximized"
+  title = "Spider"
+  [window.padding]
+  x = 5
+  y = 5
+  [window.dimensions]
+  columns = 132
+  lines = 43
+
+  [window.class]
+  instance = "Alacritty"
+  general = "Alacritty"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[font]
+  normal = { family = "FiraCode Nerd Font", style = "Medium" }
+  bold = { family = "FiraCode Nerd Font", style = "Bold" }
+  italic = { family = "FiraCode Nerd Font", style = "MediumItalic" }
+  bold_italic = { family = "FiraCode Nerd Font", style = "BoldItalic" }
+  size = 11.0
+  offset.y = 7
+
+[colors]
+  [colors.primary]
+  background = "#1e1e1e"
+  foreground = "#a9b1d6"
+
+  [colors.normal]
+  black = "#32344a"
+  red = "#f7768e"
+  green = "#9ece6a"
+  yellow = "#e0af68"
+  blue = "#7aa2f7"
+  magenta = "#ad8ee6"
+  cyan = "#449dab"
+  white = "#787c99"
+
+  [colors.bright]
+  black = "#444b6a"
+  red = "#ff7a93"
+  green = "#b9f27c"
+  yellow = "#ff9e64"
+  blue = "#7da6ff"
+  magenta = "#bb9af7"
+  cyan = "#0db9d7"
+  white = "#acb0d0"
+
+[cursor]
+  style = "Block"
+  blink_interval = 750
+
+[selection]
+save_to_clipboard = true
+
+[shell]
+program = "/usr/bin/zsh"
+
+[keyboard]
+  [[keyboard.bindings]]
+  key = "Return"
+  mods = "Super|Shift"
+  action = "SpawnNewInstance"
+
