@@ -68,6 +68,8 @@ alias ls="exa --icons"
 alias vim="nvim"
 alias chrome="google-chrome"
 
+#Nepali Date
+alias nepali_date="source /home/spider/code/Nepali_date/venv/bin/activate && python3 /home/spider/code/Nepali_date/main.py"
 
 # zsh-vi-mode Configuration
 zinit light "jeffreytse/zsh-vi-mode"
