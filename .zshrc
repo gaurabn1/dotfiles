@@ -1,3 +1,15 @@
+# Terminal Based Programs
+# rainfrog = a database management tui
+# lazydocker = a docker tui
+# posting = a command-line HTTP client similar to Postman
+# yazi = a terminal-based file manager
+#
+# Terminal Based Games
+# cataclysm = a roguelike game with complex survival system
+# ninvaders = a space invaders clone
+# nethack = a dungeon crawling game
+
+
 bindkey -v
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -33,10 +45,6 @@ source $ZSH/oh-my-zsh.sh
 # pokemon-colorscripts --no-title -s -r
 pokemon-colorscripts -s -r
 
-# rainfrog = a database management tui
-# lazydocker = a docker tui
-# posting = a command-line HTTP client similar to Postman
-# yazi = a terminal-based file manager
 
 eval "$(zoxide init zsh --cmd cd)"
 
@@ -70,6 +78,9 @@ alias chrome="google-chrome"
 
 #Nepali Date
 alias nepali_date="source /home/spider/code/Nepali_date/venv/bin/activate && python3 /home/spider/code/Nepali_date/main.py"
+
+# VLC terminal mode
+alias vlc-terminal="vlc -I ncurses /home/spider/Music"
 
 # zsh-vi-mode Configuration
 zinit light "jeffreytse/zsh-vi-mode"
