@@ -100,3 +100,4 @@ function zvm_after_select_vi_mode() {
 }
 # eval "$(starship init zsh)"
 bindkey -v
+alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \"$@\""
