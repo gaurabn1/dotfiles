@@ -9,6 +9,9 @@
 # ninvaders = a space invaders clone
 # nethack = a dungeon crawling game
 
+# Disable Touchpad
+# ~/.config/hypr/UserConfigs/Laptops.conf
+
 
 bindkey -v
 export ZSH="$HOME/.oh-my-zsh"
@@ -75,6 +78,10 @@ eval "$(oh-my-posh init zsh --config ~/.oh-my-posh/themes/gaurab_custom_theme.js
 alias ls="exa --icons"
 alias vim="nvim"
 alias chrome="google-chrome"
+alias cat="batcat"
+
+# VScode - make it faster to load
+alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \"$@\""
 
 #Nepali Date
 alias nepali_date="source /home/spider/code/Nepali_date/venv/bin/activate && python3 /home/spider/code/Nepali_date/main.py"
@@ -100,4 +107,3 @@ function zvm_after_select_vi_mode() {
 }
 # eval "$(starship init zsh)"
 bindkey -v
-alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \"$@\""
