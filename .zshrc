@@ -17,48 +17,34 @@ bindkey -v
 export ZSH="$HOME/.oh-my-zsh"
 
 ### Added by Zinit's installer
-if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-        print -P "%F{33} %F{34}Installation successful.%f%b" || \
-        print -P "%F{160} The clone has failed.%f%b"
-fi
-
-source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-# autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-### End of Zinit's installer chunk
+# if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+#     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+#     command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+#     command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+#         print -P "%F{33} %F{34}Installation successful.%f%b" || \
+#         print -P "%F{160} The clone has failed.%f%b"
+# fi
+#
+# source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+# # autoload -Uz _zinit
+# (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # ZSH_THEME="funky"
-
-# typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=( 
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
     auto-notify
+    zsh-vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
 
-
 # pokemon-colorscripts --no-title -s -r
-pokemon-colorscripts -s -r
-
+# pokemon-colorscripts -s -r
 
 eval "$(zoxide init zsh --cmd cd)"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-#
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
-
 
 # cargo - rust package manager
 export CARGO_HOME="$HOME/.cargo"
@@ -79,31 +65,24 @@ alias ls="exa --icons"
 alias vim="nvim"
 alias chrome="google-chrome"
 alias cat="batcat"
+alias python="python3"
 
 # VScode - make it faster to load
-alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \"$@\""
+alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \'$@\'"
 
 #Nepali Date
-alias nepali_date="source /home/spider/code/Nepali_date/venv/bin/activate && python3 /home/spider/code/Nepali_date/main.py"
+alias nepali-date="source /home/spider/code/Nepali_date/venv/bin/activate && python3 /home/spider/code/Nepali_date/main.py"
 
 # VLC terminal mode
 alias vlc-terminal="vlc -I ncurses /home/spider/Music"
 
-# zsh-vi-mode Configuration
-zinit light "jeffreytse/zsh-vi-mode"
-#
+#django with debugpy
+alias python-debugpy="python3 -m debugpy --listen 5678 --wait-for-client manage.py runserver --noreload"
+
+# Open zen browser
+alias zen="/home/spider/.local/share/AppImage/ZenBrowser.AppImage"
+
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
-function zvm_after_select_vi_mode() {
-  case $ZVM_MODE in
-    $ZVM_MODE_NORMAL) VIMODE="N" ;;
-    $ZVM_MODE_INSERT) VIMODE="I" ;;
-    $ZVM_MODE_VISUAL) VIMODE="V" ;;
-    $ZVM_MODE_VISUAL_LINE) VIMODE="L" ;;
-    $ZVM_MODE_REPLACE) VIMODE="R" ;;
-  esac
-  PS1="$VIMODE %~ -> "
-  VIMODE_SEGMENT="%K{white}%F{black} $VIMODE %f%k"
-  # p10k display -v left "${VIMODE_SEGMENT}"
-}
+
 # eval "$(starship init zsh)"
 bindkey -v
