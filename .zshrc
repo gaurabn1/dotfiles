@@ -66,6 +66,7 @@ alias vim="nvim"
 alias chrome="google-chrome"
 alias cat="batcat"
 alias python="python3"
+alias cowsay="cowsay -f dragon"
 
 # VScode - make it faster to load
 alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \'$@\'"
@@ -81,6 +82,12 @@ alias python-debugpy="python3 -m debugpy --listen 5678 --wait-for-client manage.
 
 # Open zen browser
 alias zen="/home/spider/.local/share/AppImage/ZenBrowser.AppImage"
+
+# Keysound
+# Git hub page: https://github.com/fgheng/keysound/blob/master/README-en.md
+alias keysound="/home/spider/Music/Keysounds/keysound/keysound -j /home/spider/Music/Keysounds/keysound/audio/keysounds/keysound.json -D"
+# Stop Keysound
+alias keysound-kill="/home/spider/Music/Keysounds/keysound/keysound -k"
 
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
