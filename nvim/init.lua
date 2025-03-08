@@ -374,7 +374,11 @@ require('lazy').setup({
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'williamboman/mason.nvim', opts = {} },
+      { 'williamboman/mason.nvim', opts = {
+        ensure_installed = {
+          'typescript-language-server',
+        },
+      } },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -874,7 +878,7 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.nvim-tree',
-  require 'kickstart.plugins.showkeys',
+  -- require 'kickstart.plugins.showkeys',
   require 'kickstart.plugins.codeium',
   -- require 'kickstart.plugins.null-ls',
   require 'kickstart.plugins.codeium-nvim',
@@ -884,8 +888,12 @@ require('lazy').setup({
   require 'kickstart.plugins.fzf',
   require 'kickstart.plugins.web-devicons',
   require 'kickstart.plugins.vim-smoothie',
-  --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.rafce',
+  require 'kickstart.plugins.ollama',
+  require 'kickstart.plugins.avante-ai',
+  -- require 'kickstart.plugins.claude',
+  -- require 'kickstart.plugins.auto-save',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
