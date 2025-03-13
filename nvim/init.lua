@@ -1,4 +1,15 @@
--- Custom Mappings
+--Custom Mappings
+
+-- Load .env variables into Neovim's environment
+if vim.fn.filereadable '.env' == 1 then
+  for line in io.lines '.env' do
+    local key, value = line:match '^(%S+)=(%S+)$'
+    if key and value then
+      vim.env[key] = value
+    end
+  end
+end
+
 vim.o.foldmethod = 'indent'
 
 vim.g.smoothie_scroll_speed = 50
@@ -36,7 +47,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -53,7 +64,7 @@ vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
 
 -- Don't show the mode, since it's already in the status line
-vim.opt.showmode = false
+vim.opt.showmode = true
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -374,11 +385,42 @@ require('lazy').setup({
       -- Automatically install LSPs and related tools to stdpath for Neovim
       -- Mason must be loaded before its dependents so we need to set it up here.
       -- NOTE: `opts = {}` is the same as calling `require('mason').setup({})`
-      { 'williamboman/mason.nvim', opts = {
-        ensure_installed = {
-          'typescript-language-server',
+      {
+        'williamboman/mason.nvim',
+        opts = {
+          ensure_installed = {
+            -- Debuggers
+            'debugpy',
+            'delve',
+            'js-debug-adapter',
+            'node-debug2-adapter',
+
+            -- LSP Servers
+            'typescript-language-server',
+            'eslint-lsp',
+            'html-lsp',
+            'jedi-language-server',
+            'lua-language-server',
+            'pyright',
+            'tailwindcss-language-server',
+            'django-template-lsp',
+
+            -- Formatters & Linters
+            'black',
+            'isort',
+            'docformatter',
+            'pylint',
+            'stylua',
+            'quick-lint-js',
+
+            -- Extra Tools
+            'emmet-language-server',
+            'harper-ls',
+            'ast-grep',
+            'vscode-node-debug2',
+          },
         },
-      } },
+      },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
@@ -537,9 +579,12 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
+        html = { filetypes = { 'html', 'twig', 'hbs' } },
+        -- cssls = {},
+        -- tsserver = {},
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -547,7 +592,7 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {},
         --
 
         lua_ls = {
@@ -776,29 +821,29 @@ require('lazy').setup({
 
       vim.cmd.hi 'Comment gui=none'
       -- Transparent
-      --       vim.cmd [[
-      --   " global transparency settings
-      --   hi normal guibg=none ctermbg=none
-      --   hi normalnc guibg=none ctermbg=none
-      --   hi vertsplit guibg=none ctermbg=none
-      --   hi statusline guibg=none ctermbg=none
-      --   hi linenr guibg=none ctermbg=none
-      --   hi signcolumn guibg=none ctermbg=none
-      --   hi endofbuffer guibg=none ctermbg=none
-      --   hi cursorlinenr guibg=none ctermbg=none
-      --   hi pmenu guibg=none ctermbg=none
-      --   hi pmenusel guibg=none ctermbg=none
-      --   hi search guibg=none ctermbg=none
-      --   hi incsearch guibg=none ctermbg=none
-      --   hi tabline guibg=none ctermbg=none
-      --   hi tablinesel guibg=none ctermbg=none
-      --   hi tablinefill guibg=none ctermbg=none
-      --   hi nvimtreenormal guibg=none ctermbg=none
-      --   hi nvimtreestatusline guibg=none ctermbg=none
-      --   hi nvimtreewinseparator guibg=none ctermbg=none
-      --   hi winbar guibg=none ctermbg=none
-      --   hi winbarnc guibg=none ctermbg=none
-      -- ]]
+      vim.cmd [[
+        " global transparency settings
+        hi normal guibg=none ctermbg=none
+        hi normalnc guibg=none ctermbg=none
+        hi vertsplit guibg=none ctermbg=none
+        hi statusline guibg=none ctermbg=none
+        hi linenr guibg=none ctermbg=none
+        hi signcolumn guibg=none ctermbg=none
+        hi endofbuffer guibg=none ctermbg=none
+        hi cursorlinenr guibg=none ctermbg=none
+        hi pmenu guibg=none ctermbg=none
+        hi pmenusel guibg=none ctermbg=none
+        hi search guibg=none ctermbg=none
+        hi incsearch guibg=none ctermbg=none
+        hi tabline guibg=none ctermbg=none
+        hi tablinesel guibg=none ctermbg=none
+        hi tablinefill guibg=none ctermbg=none
+        hi nvimtreenormal guibg=none ctermbg=none
+        hi nvimtreestatusline guibg=none ctermbg=none
+        hi nvimtreewinseparator guibg=none ctermbg=none
+        hi winbar guibg=none ctermbg=none
+        hi winbarnc guibg=none ctermbg=none
+      ]]
     end,
   },
 
@@ -848,7 +893,22 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'python',
+        'javascript',
+        'typescript',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -878,7 +938,7 @@ require('lazy').setup({
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.nvim-tree',
-  -- require 'kickstart.plugins.showkeys',
+  require 'kickstart.plugins.showkeys',
   require 'kickstart.plugins.codeium',
   -- require 'kickstart.plugins.null-ls',
   require 'kickstart.plugins.codeium-nvim',
@@ -897,7 +957,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
