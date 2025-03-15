@@ -1,3 +1,6 @@
+# Ngrok
+#
+#
 # Terminal Based Programs
 # rainfrog = a database management tui
 # lazydocker = a docker tui
@@ -68,6 +71,8 @@ alias cat="batcat"
 alias python="python3"
 alias cowsay="cowsay -f dragon"
 alias t="tmux"
+alias phi="ollama run phi"
+alias "goanddie"="shutdown now"
 
 # VScode - make it faster to load
 alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \'$@\'"
@@ -97,3 +102,5 @@ export EDITOR=/usr/local/bin/nvim
 # eval "$(starship init zsh)"
 bindkey -v
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:/home/spider/.local/lib/npm/bin
+
