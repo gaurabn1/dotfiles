@@ -73,6 +73,7 @@ alias cowsay="cowsay -f dragon"
 alias t="tmux"
 alias phi="ollama run phi"
 alias "goanddie"="shutdown now"
+alias discord="flatpak run com.discordapp.Discord --enable-features=UseOzonePlatform --ozone-platform=x11"
 
 # VScode - make it faster to load
 alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \'$@\'"
