@@ -6,6 +6,7 @@ return {
     'williamboman/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
     'mfussenegger/nvim-dap-python',
+    'stevearc/overseer.nvim',
   },
   keys = {
     {
@@ -133,9 +134,7 @@ return {
     require('mason-nvim-dap').setup {
       automatic_installation = true,
       handlers = {},
-      ensure_installed = {
-        'delve',
-      },
+      ensure_installed = {},
     }
 
     dapui.setup {

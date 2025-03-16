@@ -2,4 +2,15 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
+-- return {
+--   'lazy.nvim',
+--   config = function()
+--     local lazy = require 'lazy'
+--     lazy.config.defaults.lazy = false
+--     lazy.config.install.missing = true
+--     lazy.config.checker.enabled = true
+--     lazy.config.change_detection.enabled = true
+--   end,
+-- }
+--
 return {}

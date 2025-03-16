@@ -4,7 +4,7 @@ return {
     lazy = false,
     config = function()
       -- Load API key from environment variable
-      local api_key = ''
+      local api_key = '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'
       if api_key then
         vim.g.claude_api_key = api_key
       else
