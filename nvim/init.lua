@@ -1,6 +1,12 @@
 -- Disable the default "s" key behavior
 vim.api.nvim_set_keymap('n', 's', '', { noremap = true, silent = true })
 
+vim.keymap.set({ 'n', 't' }, '<A-c>', '<cmd>Lspsaga code_action<CR>', { noremap = true, silent = true })
+
+vim.keymap.set({ 'n', 't' }, '<A-d>', '<cmd>Lspsaga term_toggle<CR>', { noremap = true, silent = true })
+
+vim.lsp.handlers['textDocument/semanticTokens/full'] = function() end
+
 vim.o.foldmethod = 'indent'
 
 vim.g.smoothie_scroll_speed = 50
@@ -83,7 +89,7 @@ vim.opt.timeoutlen = 300
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
--- Sets how neovim will display certain whitespace characters in the editor.
+-- Sets how Neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
@@ -402,11 +408,6 @@ require('lazy').setup({
           map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-          -- The following two autocommands are used to highlight references of the
-          -- word under your cursor when your cursor rests there for a little while.
-          --    See `:help CursorHold` for information about when this is executed
-          --
-          -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
@@ -595,6 +596,11 @@ require('lazy').setup({
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       'Exafunction/codeium.nvim',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lua',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-nvim-lsp-document-symbol',
+      'ray-x/cmp-treesitter',
     },
     config = function()
       local cmp = require 'cmp'
@@ -605,39 +611,17 @@ require('lazy').setup({
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
+            -- vim.fn["vsnip#anonymous"](args.body)
           end,
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
         mapping = cmp.mapping.preset.insert {
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-j>'] = cmp.mapping.select_next_item(),
+          ['<C-k>'] = cmp.mapping.select_prev_item(),
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
-
-          -- Accept ([y]es) the completion.
-          --  This will auto-import if your LSP supports it.
-          --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
-
-          -- If you prefer more traditional completion keymaps,
-          -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
-
-          -- Manually trigger a completion from nvim-cmp.
-          --  Generally you don't need this, because nvim-cmp will display
-          --  completions whenever it has completion options available.
+          ['<CR>'] = cmp.mapping.confirm { select = true },
           ['<C-Space>'] = cmp.mapping.complete {},
-
-          -- Think of <c-l> as moving to the right of your snippet expansion.
-          --  So if you have a snippet that's like:
-          --  function $name($args)
-          --    $body
-          --  end
-          --
-          -- <c-l> will move you to the right of each of the expansion locations.
-          -- <c-h> is similar, except moving you backwards.
           ['<C-l>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
@@ -648,9 +632,6 @@ require('lazy').setup({
               luasnip.jump(-1)
             end
           end, { 'i', 's' }),
-
-          -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
-          --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
         sources = {
           {
@@ -663,48 +644,7 @@ require('lazy').setup({
           { name = 'luasnip' },
           { name = 'path' },
         },
-        mapping = {
-          ['<Tab>'] = cmp.mapping.select_next_item(), -- Select next item
-          ['<S-Tab>'] = cmp.mapping.select_prev_item(), -- Select previous item
-          ['<CR>'] = cmp.mapping.confirm { select = true }, -- Confirm selection with Enter
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4), -- Scroll documentation
-          ['<C-f>'] = cmp.mapping.scroll_docs(4), -- Scroll documentation
-        },
       }
-    end,
-  },
-
-  {
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    init = function()
-      vim.cmd.colorscheme 'tokyonight-night'
-
-      vim.cmd.hi 'Comment gui=none'
-      -- Transparent
-      -- vim.cmd [[
-      --   " global transparency settings
-      --   hi normal guibg=none ctermbg=none
-      --   hi normalnc guibg=none ctermbg=none
-      --   hi vertsplit guibg=none ctermbg=none
-      --   hi statusline guibg=none ctermbg=none
-      --   hi linenr guibg=none ctermbg=none
-      --   hi signcolumn guibg=none ctermbg=none
-      --   hi endofbuffer guibg=none ctermbg=none
-      --   hi cursorlinenr guibg=none ctermbg=none
-      --   hi pmenu guibg=none ctermbg=none
-      --   hi pmenusel guibg=none ctermbg=none
-      --   hi search guibg=none ctermbg=none
-      --   hi incsearch guibg=none ctermbg=none
-      --   hi tabline guibg=none ctermbg=none
-      --   hi tablinesel guibg=none ctermbg=none
-      --   hi tablinefill guibg=none ctermbg=none
-      --   hi nvimtreenormal guibg=none ctermbg=none
-      --   hi nvimtreestatusline guibg=none ctermbg=none
-      --   hi nvimtreewinseparator guibg=none ctermbg=none
-      --   hi winbar guibg=none ctermbg=none
-      --   hi winbarnc guibg=none ctermbg=none
-      -- ]]
     end,
   },
 
@@ -770,9 +710,9 @@ require('lazy').setup({
       auto_install = true,
       highlight = {
         enable = true,
-        additional_vim_regex_highlighting = { 'ruby' },
+        additional_vim_regex_highlighting = { 'python' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true, disable = { '' } },
     },
   },
 
@@ -804,7 +744,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.claude',
   require 'kickstart.plugins.avante-ai',
   require 'kickstart.plugins.codeium',
-  require 'kickstart.plugins.codeium-nvim',
+  -- require 'kickstart.plugins.codeium-nvim',
   ---
   ------------------- Not used -------------------
   -- require 'kickstart.plugins.auto-save',
@@ -820,29 +760,12 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   { import = 'custom.plugins' },
+  { import = 'custom.themes' },
   --
   -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
   -- Or use telescope!
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
-
-  default = {
-    lazy = false,
-  },
-
-  install = {
-    missing = true,
-    colorscheme = { 'catppuccin', 'gruvbox', 'tokyonight', 'gruvbox-material' },
-  },
-
-  checker = {
-    enabled = true,
-  },
-
-  change_detection = {
-    enabled = true,
-    notify = true,
-  },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
