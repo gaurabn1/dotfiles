@@ -626,7 +626,7 @@ require('lazy').setup({
   ------------------- Not used -------------------
   -- require 'kickstart.plugins.auto-save',
   -- require 'kickstart.plugins.showkeys',
-  -- require 'kickstart.plugins.null-ls',
+  require 'kickstart.plugins.null-ls',
   -- require 'kickstart.plugins.goto-preview',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.indent_line',
