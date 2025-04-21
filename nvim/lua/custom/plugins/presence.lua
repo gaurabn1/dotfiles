@@ -5,8 +5,6 @@ return {
       -- General options:
       client_id = '1350510040255299635',
       auto_update = true, -- Automatically update presence
-      -- neovim_image_text = 'The best text editor', -- Custom text for Neovim
-      -- main_image = 'Nvim', -- Main image for presence
       log_level = 'debug',
       debounce_timeout = 0,
       enable_line_number = true,
