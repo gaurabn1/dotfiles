@@ -3,7 +3,8 @@ return {
     'pasky/claude.vim',
     lazy = false,
     config = function()
-      local api_key = "" //enter your api key form claude
+      -- Load API key from environment variable
+      local api_key = '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'
       if api_key then
         vim.g.claude_api_key = api_key
       else
