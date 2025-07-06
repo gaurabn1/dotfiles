@@ -12,33 +12,16 @@
 # ninvaders = a space invaders clone
 # nethack = a dungeon crawling game
 
-# Disable Touchpad
-# ~/.config/hypr/UserConfigs/Laptops.conf
-
 
 bindkey -v
 export ZSH="$HOME/.oh-my-zsh"
 
-### Added by Zinit's installer
-# if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
-#     print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
-#     command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
-#     command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
-#         print -P "%F{33} %F{34}Installation successful.%f%b" || \
-#         print -P "%F{160} The clone has failed.%f%b"
-# fi
-#
-# source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
-# # autoload -Uz _zinit
-# (( ${+_comps} )) && _comps[zinit]=_zinit
-
-# ZSH_THEME="funky"
 
 plugins=( 
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
-    auto-notify
+    # auto-notify
     zsh-vi-mode
 )
 
@@ -53,8 +36,6 @@ eval "$(zoxide init zsh --cmd cd)"
 export CARGO_HOME="$HOME/.cargo"
 export PATH="$CARGO_HOME/bin:$PATH"
 
-. "$HOME/.local/bin/env"
-
 
 # ffzf - fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -67,34 +48,36 @@ eval "$(oh-my-posh init zsh --config ~/.oh-my-posh/themes/gaurab_custom_theme.js
 # alias ls="exa --icons"
 alias vim="nvim"
 alias chrome="google-chrome"
-alias cat="batcat"
+# alias cat="batcat"
 alias python="python3"
-alias cowsay="cowsay -f dragon"
+# alias cowsay="cowsay -f dragon"
 alias t="tmux"
 alias phi="ollama run phi"
 alias "goanddie"="shutdown now"
 alias discord="flatpak run com.discordapp.Discord --enable-features=UseOzonePlatform --ozone-platform=x11"
 
-# VScode - make it faster to load
-alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \'$@\'"
+alias px="pnpm dev"
+alias yx="yarn dev"
+alias yb="yarn build"
 
-#Nepali Date
-alias nepali-date="source /home/spider/code/Nepali_date/venv/bin/activate && python3 /home/spider/code/Nepali_date/main.py"
 
-# VLC terminal mode
-alias vlc-terminal="vlc -I ncurses /home/spider/Music"
+# Git
+alias gs="git status"
+alias ga="git add ."
+alias gl="git log --oneline"
+alias gb="git branch"
+alias gpull="git pull"
+alias gpush="git push"
+alias gco="git checkout"
 
+
+# # VScode - make it faster to load
+# alias code="2>/tmp/vscode_output code --disable-gpu --disable-software-rasterizer \'$@\'"
+#
 #django with debugpy
-alias python-debugpy="python3 -m debugpy --listen 5678 --wait-for-client manage.py runserver --noreload"
-
-# Open zen browser
-alias zen="/home/spider/.local/share/AppImage/ZenBrowser.AppImage"
-
-# Keysound
-# Git hub page: https://github.com/fgheng/keysound/blob/master/README-en.md
-alias keysound="/home/spider/Music/Keysounds/keysound/keysound -j /home/spider/Music/Keysounds/keysound//audio/keysounds/keysound.json -D"
-# Stop Keysound
-alias keysound-kill="/home/spider/Music/Keysounds/keysound/keysound -k"
+# alias python-debugpy="python3 -m debugpy --listen 5678 --wait-for-client manage.py runserver --noreload"
+alias debugpy="~/.local/share/pipx/venvs/debugpy/bin/python -m debugpy --listen 5678 --wait-for-client manage.py runserver --noreload"
+alias py="python3"
 
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
@@ -105,3 +88,16 @@ bindkey -v
 export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:/home/spider/.local/lib/npm/bin
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fpath+=(~/.zsh/completions)
+
+
+# To enable natural scrolling
+# xinput set-prop 12 "libinput Natural Scrolling Enabled" 1
+
+# To disable natural scrolling
+# xinput set-prop 12 "libinput Natural Scrolling Enabled" 0
+eval "$(~/.local/bin/mise activate zsh)"
+eval "$(direnv hook zsh)"
